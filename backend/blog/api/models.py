@@ -1,3 +1,10 @@
 from django.db import models
 
-# Create your models here.
+class Post(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=76, blank=True, default='Script for ...')
+    body = models.TextField(max_length=2000, blank=True, default='')
+    owner = models.ForeignKey('auth.User', related_name='posts', on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['created']
