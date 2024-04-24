@@ -8,6 +8,19 @@ from rest_framework import permissions
 from api.permissions import IsOwnerOrReadOnly
 from api.models import Comment
 from api.models import Category
+from api.models import Clap
+
+class ClapCreateView(generics.CreateAPIView):
+    queryset = Clap.objects.all()
+    serializer_class = serializers.ClapSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        post_id = self.kwargs.get('post_id')
+        clap, created = Clap.objects.get_or_create(post_id=post_id)
+        clap.count += 1
+        clap.save()
+        serializer.save(clap=clap)
 
 class CategoryList(generics.ListCreateAPIView):
     queryset = Category.objects.all()
