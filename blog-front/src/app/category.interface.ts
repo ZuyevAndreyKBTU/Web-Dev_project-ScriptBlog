@@ -1,9 +1,7 @@
 import { User } from './user.interface';
 
-export interface BlogPost {
+export interface Category {
     id: number;
-    title: string;
-    body: string;
+    name: string;
     owner: User;
-}
-  
+  }
